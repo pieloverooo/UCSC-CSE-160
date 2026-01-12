@@ -152,13 +152,18 @@ function handleDrawOperationEvent() {
 
 function angleBetween(v1, v2){
   var d, m1, m2, alpha;
-  
+
   d = Vector3.dot(v1,v2);
 
   m1 = v1.magnitude();
   m2 = v2.magnitude();
 
   alpha = Math.acos(d / (m1 * m2));
+  console.log(alpha);
+  //almost forgot about having an angle of 0 degrees
+  if (Number.isNaN(alpha)){
+    return 0;
+  }
   alpha = alpha * (180/Math.PI);
   return alpha;
 }
