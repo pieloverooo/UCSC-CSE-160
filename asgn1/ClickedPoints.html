@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Draw a point with a mouse click</title>
+  </head>
+
+  <body onload="main()">
+    <canvas id="webgl" width="400" height="400">
+    Please use a browser that supports "canvas"
+    </canvas>
+
+    <script src="lib/webgl-utils.js"></script>
+    <script src="lib/webgl-debug.js"></script>
+    <script src="lib/cuon-utils.js"></script>
+    <script src="ClickedPoints.js"></script>
+    <script src="Point.js"></script>
+    <script src="Triangle.js"></script>
+    <script src="Circle.js"></script>
+
+    <p id="numdot"> XXX </p>
+
+    <div>
+    <input class="styled" id="clear" type="button" value="Clear Canvas" />
+    </div>
+
+    <p>Drawing Mode:</p>
+    <div>
+    <input class="styled" id="point" type="button" value="Square" />
+    <input class="styled" id="circle" type="button" value="Circle" />
+    <input class="styled" id="triangle" type="button" value="Triangle" />
+    </div>
+    <p>Shape Color:</p>
+
+<div>
+  <label for="Red">Red</label>
+  <input
+    type="range" 
+    id="red"
+    name="Red"
+    min="0" 
+    max="255"
+    step="1" />
+  
+  <label for="Green">Green</label>
+  <input
+    type="range"
+    id="green"
+    name="Green"
+    min="0"
+    max="255"
+    value="90"
+    step="1" />
+  
+  
+  <label for="Blue">Blue</label>
+  <input
+    type="range"
+    id="blue"
+    name="Blue"
+    min="0"
+    max="100"
+    value="90"
+    step="1" />
+  
+</div>
+<div>
+  <label for="Size">Shape Size:</label>
+  <input
+    type="range"
+    id="size"
+    name="Size"
+    min="1"
+    max="100"
+    value="10"
+    step="5" />
+  
+  <label for="Segments">Segment Count (Circles):</label> 
+  <input
+    type="range"
+    id="segments"
+    name="Segments"
+    min="0"
+    max="32"
+    value="10"
+    step="1" />
+  
+</div>
+
+
+  </body>
+</html>
