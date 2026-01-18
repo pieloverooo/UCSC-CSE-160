@@ -15,6 +15,7 @@ var FSHADER_SOURCE = `
   uniform vec4 u_FragColor;
   void main() {
     gl_FragColor = u_FragColor;
+    gl_FragColor.rgb *= gl_FragColor.a;
   }`
 
 //drawing mode global variable
@@ -135,6 +136,7 @@ let g_selectedColor = [1.0, 1.0, 1.0, 1.0];
 let g_selectedSize = 10;
 let g_selectedType = POINT;
 let g_numSegments = 10;
+let g_rainbow = false;
 function addActionsFromHtmlUI() {
 
   //-------buttons-------
@@ -144,12 +146,15 @@ function addActionsFromHtmlUI() {
   document.getElementById('point').onclick = function() { g_selectedType = POINT};
   document.getElementById('triangle').onclick = function() { g_selectedType = TRIANGLE};
   document.getElementById('circle').onclick = function() { g_selectedType = CIRCLE};
+  //rainbow mode
+  document.getElementById('rainbow').onclick = function() { g_rainbow = !g_rainbow};
 
   //-------sliders-------
   //color
   document.getElementById('red').addEventListener('mouseup', function() { g_selectedColor[0] = (this.value / 255)});
   document.getElementById('green').addEventListener('mouseup', function() { g_selectedColor[1] = (this.value / 255)});
   document.getElementById('blue').addEventListener('mouseup', function() { g_selectedColor[2] = (this.value / 255)});
+  document.getElementById('alpha').addEventListener('mouseup', function() { g_selectedColor[3] = (this.value / 100)});
   //size
   document.getElementById('size').addEventListener('mouseup', function() { g_selectedSize = this.value});
   //number of segments (for circle)
@@ -232,6 +237,13 @@ function click(ev) {
     point = new Circle();  
     point.segments = g_numSegments;
   }
+
+  if (g_rainbow){
+    g_selectedColor[0] = ((g_selectedColor[0]*255 + 2) % 255)/255;
+    g_selectedColor[1] = ((g_selectedColor[1]*255 + 4) % 255)/255;
+    g_selectedColor[2] = ((g_selectedColor[2]*255 + 1) % 255)/255;
+
+  }
   point.position = [x,y];
   point.color = g_selectedColor.slice();
   point.size = g_selectedSize;
@@ -268,9 +280,11 @@ function clear_canvas_event(){
   var r = document.getElementById('red').value;
   var g = document.getElementById('green').value;
   var b = document.getElementById('blue').value;
+  var a = document.getElementById('alpha').value;
   console.log("red:",r);
   console.log("green:",g);
   console.log("blue:",b);
+  console.log("alpha:",a);
   renderAllShapes();
 }
 

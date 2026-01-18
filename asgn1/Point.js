@@ -18,6 +18,7 @@ class Point{
     //pass position of point to a_Position
     gl.vertexAttrib3f(a_Position, xy[0], xy[1], 0.0);
     //pass color to u_FragColor
+    //console.log("a",rgba[3]);
     gl.uniform4f(u_FragColor, rgba[0], rgba[1], rgba[2], rgba[3]);
 
     //pass size to u_Size;
