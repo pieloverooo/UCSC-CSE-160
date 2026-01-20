@@ -15,7 +15,7 @@ var FSHADER_SOURCE = `
   uniform vec4 u_FragColor;
   void main() {
     gl_FragColor = u_FragColor;
-    gl_FragColor.rgb *= gl_FragColor.a;
+    //gl_FragColor.rgb *= gl_FragColor.a;
   }`
 
 //drawing mode global variable
@@ -44,7 +44,8 @@ function setupWebGL(){
   
   // Get the rendering context for WebGL
   //gl = getWebGLContext(canvas);
-  gl = canvas.getContext("webgl", {preserveDrawingBuffer: true});
+  //gl = canvas.getContext("webgl", {preserveDrawingBuffer: true, premultipliedAlpha: false, alpha: false });
+  gl = canvas.getContext("webgl", {preserveDrawingBuffer: true, premultipliedAlpha: false });
     if (!gl) {
       console.log('Failed to get the rendering context for WebGL');
       return;
@@ -108,12 +109,15 @@ function renderAllShapes(){
     // Draw
     gl.drawArrays(gl.POINTS, 0, 1);
   */
+    //gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
+    gl.blendFuncSeparate(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA, gl.ONE, gl.ONE);
     g_shapesList[i].render();
   }
 
   var duration = performance.now() - startTime;
 
   sendTextToHTML("numdot: " + len + " ms: " + Math.floor(duration) + " fps: " + Math.floor(10000/duration)/10, "numdot");
+  sendTextToHTML(g_angle + " degrees", "rotate");
 
 }
 
@@ -137,17 +141,35 @@ let g_selectedSize = 10;
 let g_selectedType = POINT;
 let g_numSegments = 10;
 let g_rainbow = false;
+let g_angle = 0;
+
+//let placetrix1 = 0;
+//let placetriy1 = 0;
+
+//let placetrix2 = 0;
+//let placetriy2 = 20;
+
+//let placetrix3 = 20;
+//let placetriy3 = 20;
+
+placetriverts = [0.0, 0.0, 0.0, 20.0, 20.0, 20.0];
 function addActionsFromHtmlUI() {
 
   //-------buttons-------
   //clear
   document.getElementById('clear').onclick = function() { clear_canvas_event(); };
+  document.getElementById('undo').onclick = function() { undo_event(); };
+  //draw picture 
+  document.getElementById('drawpic').onclick = function() { draw_picture(); };
+  document.getElementById('placetri').onclick = function() { renderAllShapes(); };
   //draw object type
   document.getElementById('point').onclick = function() { g_selectedType = POINT};
   document.getElementById('triangle').onclick = function() { g_selectedType = TRIANGLE};
   document.getElementById('circle').onclick = function() { g_selectedType = CIRCLE};
   //rainbow mode
   document.getElementById('rainbow').onclick = function() { g_rainbow = !g_rainbow};
+  //draw triangle
+  document.getElementById('placetri').onclick = function() { placetri_event(); };
 
   //-------sliders-------
   //color
@@ -159,6 +181,28 @@ function addActionsFromHtmlUI() {
   document.getElementById('size').addEventListener('mouseup', function() { g_selectedSize = this.value});
   //number of segments (for circle)
   document.getElementById('segments').addEventListener('mouseup', function() {g_numSegments = this.value});
+  //angle (for triangle)
+  document.getElementById('rotation').addEventListener('mouseup', function() { g_angle = this.value });
+  //triangle sliders
+  document.getElementById('pt1x').addEventListener('mouseup', function() { 
+    placetriverts[0] = this.value;
+    sendTextToHTML(placetriverts[0] + ", " + placetriverts[1], "x1,y1"); });
+  document.getElementById('pt1y').addEventListener('mouseup', function() { 
+    placetriverts[1] = this.value;
+    sendTextToHTML(placetriverts[0] + ", " + placetriverts[1], "x1,y1"); });
+  document.getElementById('pt2x').addEventListener('mouseup', function() { 
+    placetriverts[2] = this.value;
+    sendTextToHTML(placetriverts[2] + ", " + placetriverts[3], "x2,y2"); });
+  document.getElementById('pt2y').addEventListener('mouseup', function() { 
+    placetriverts[3] = this.value;
+    sendTextToHTML(placetriverts[2] + ", " + placetriverts[3], "x2,y2"); });
+  document.getElementById('pt3x').addEventListener('mouseup', function() { 
+    placetriverts[4] = this.value;
+    sendTextToHTML(placetriverts[4] + ", " + placetriverts[5], "x3,y3"); });
+  document.getElementById('pt3y').addEventListener('mouseup', function() { 
+    placetriverts[5] = this.value;
+    sendTextToHTML(placetriverts[4] + ", " + placetriverts[5], "x3,y3"); });
+  
 
 
   //console.log("red:",r);
@@ -176,10 +220,19 @@ function main() {
   
   //event handler for html ui actions
   addActionsFromHtmlUI();
-  
+  //console.log(document.getElementById('red').value);
+  g_selectedColor[0] = document.getElementById('red').value;
+  g_selectedColor[1] = document.getElementById('green').value;
+  g_selectedColor[2] = document.getElementById('blue').value;
+
+  //console.log(g_selectedColor[0]);
+  //console.log(g_selectedColor[1]);
+  //console.log(g_selectedColor[2]);
+
   // Register function (event handler) to be called on a mouse press
   canvas.onmousedown = click;
   canvas.onmousemove = function(ev) { if (ev.buttons == 1) { click(ev) } };
+
 
   // Specify the color for clearing <canvas>
   gl.clearColor(0.0, 0.0, 0.0, 1.0);
@@ -214,9 +267,12 @@ function convertCoordinatesEventToGL(ev){
   var y = ev.clientY; // y coordinate of a mouse pointer
   var rect = ev.target.getBoundingClientRect();
 
+
+  console.log("coords", x, y);
+  
   x = ((x - rect.left) - canvas.width/2)/(canvas.width/2);
   y = (canvas.height/2 - (y - rect.top))/(canvas.height/2);
-
+  
   return ([x,y]);
 }
 
@@ -224,14 +280,16 @@ function convertCoordinatesEventToGL(ev){
 function click(ev) {
   
   let [x, y] = convertCoordinatesEventToGL(ev);
-
-
+  
+  console.log("x,y in opengl", [x,y]);
+  
   let point;
   if (g_selectedType == POINT){
     point = new Point();
   }
   else if (g_selectedType == TRIANGLE) {
     point = new Triangle();
+    point.I_angle = g_angle;
   }
   else {
     point = new Circle();  
@@ -244,6 +302,8 @@ function click(ev) {
     g_selectedColor[2] = ((g_selectedColor[2]*255 + 1) % 255)/255;
 
   }
+  
+
   point.position = [x,y];
   point.color = g_selectedColor.slice();
   point.size = g_selectedSize;
@@ -307,4 +367,44 @@ function square_event(){
 //set drawing mode global variable to 3 for square
   drawing_mode = 3;
   console.log("square mode");
+}
+
+
+function undo_event(){
+  g_shapesList.pop();
+  renderAllShapes();
+}
+
+
+function placetri_event() { 
+  def_tri = new Defined_tri;
+  /*
+  def_tri.position[0] = placetriverts[0];
+  def_tri.position[1] = placetriverts[1];
+  def_tri.position[2] = placetriverts[2];
+  def_tri.position[3] = placetriverts[3];
+  def_tri.position[4] = placetriverts[4];
+  def_tri.position[5] = placetriverts[5];
+  */
+ //console.log(placetriverts.slice());
+  def_tri.position = placetriverts.slice();
+
+  def_tri.color = g_selectedColor.slice();
+
+  g_shapesList.push(def_tri);
+
+  renderAllShapes();
+}
+
+function draw_picture() {
+  let i = 0;
+  let tri;
+  for (i; i < trislist.length; ++i){
+    tri = new Defined_tri;
+    tri.position = trislist[i];
+    tri.color = colors_list[i].slice();
+    g_shapesList.push(tri);
+
+  }
+  renderAllShapes();
 }

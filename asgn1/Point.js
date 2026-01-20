@@ -12,8 +12,8 @@ class Point{
     var size = this.size;
 
     //stop using the triangle buffer
-    //gl.disableVertexAttribArray(a_Position);
-    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([ xy[0], xy[1]]), gl.DYNAMIC_DRAW);
+    gl.disableVertexAttribArray(a_Position);
+    //gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([ xy[0], xy[1]]), gl.DYNAMIC_DRAW);
 
     //pass position of point to a_Position
     gl.vertexAttrib3f(a_Position, xy[0], xy[1], 0.0);

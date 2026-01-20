@@ -17,11 +17,16 @@
     <script src="Point.js"></script>
     <script src="Triangle.js"></script>
     <script src="Circle.js"></script>
-
+    <script src="picturetris.js"></script>
+    
+    
+    
     <p id="numdot"> XXX </p>
 
     <div>
     <input class="styled" id="clear" type="button" value="Clear Canvas" />
+    <input class="styled" id="undo" type="button" value="remove last shape" />
+    <input class="styled" id="drawpic" type="button" value="Draw a Fountain" />
     </div>
 
     <p>Drawing Mode:</p>
@@ -40,6 +45,7 @@
     name="Red"
     min="0" 
     max="255"
+    value="255"
     step="1" />
   
   <label for="Green">Green</label>
@@ -49,7 +55,7 @@
     name="Green"
     min="0"
     max="255"
-    value="90"
+    value="255"
     step="1" />
   
   
@@ -60,10 +66,10 @@
     name="Blue"
     min="0"
     max="255"
-    value="90"
+    value="255"
     step="1" />
 
-  <label for="Alpha">Alpha</label>
+  <label for="Alpha">Alpha (non functional)</label>
   <input
     type="range"
     id="alpha"
@@ -91,13 +97,100 @@
     type="range"
     id="segments"
     name="Segments"
-    min="0"
+    min="1"
     max="32"
     value="10"
     step="1" />
   
+  <label for="Rotation">Triangle Rotation (degrees) (broken)</label> 
+  <input
+    type="range"
+    id="rotation"
+    name="rotation"
+    min="0"
+    max="360"
+    value="10"
+    step="1" />
+    <p id="rotate"> XXX </p>
 </div>
 
+<div>
+    Triangle placer:
+    <p>
+    <label for="pt1x">pt1x</label>
+    <input
+    type="range"
+    id="pt1x"
+    name="pt1x"
+    min="0"
+    max="400"
+    value="0"
+    step="1" />
+    <label for="pt1y">pt1y</label>
+    <input
+    type="range"
+    id="pt1y"
+    name="pt1y"
+    min="0"
+    max="400"
+    value="0"
+    step="1" />
+    
+    <p id="x1,y1"> xx </p>
+    
+    </p>
+    <p>
+    <label for="pt2y">pt2x</label>
+    <input
+    type="range"
+    id="pt2x"
+    name="pt2x"
+    min="0"
+    max="400"
+    value="0"
+    step="1" />
+    <label for="pt2y">pt2y</label>
+    <input
+    type="range"
+    id="pt2y"
+    name="pt2y"
+    min="0"
+    max="400"
+    value="0"
+    step="1" />
 
+    <p id="x2,y2"> xx </p>
+    </p>
+    <p>
+    <label for="pt3x">pt3x</label>
+    <input
+    type="range"
+    id="pt3x"
+    name="pt3x"
+    min="0"
+    max="400"
+    value="0"
+    step="1" />
+    <label for="pt3y">pt3y</label>
+    <input
+    type="range"
+    id="pt3y"
+    name="pt3y"
+    min="0"
+    max="400"
+    value="0"
+    step="1" />
+    <p id="x3,y3"> xx </p>
+      </p>
+  </div>
+
+  
+    <input class="styled" id="placetri" type="button" value="draw tri" />
+
+Fountain Image:
+<div>
+<img src="IMG_5371F7A2A1D1-1.jpeg" 
+ style="max-width: 40%"/>
+ </div>
   </body>
 </html>
