@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>blocky animal</title>
+  </head>
+
+  <body onload="main()">
+    <canvas id="webgl" width="400" height="400">
+    Please use a browser that supports "canvas"
+    </canvas>
+
+    <script src="lib/webgl-utils.js"></script>
+    <script src="lib/webgl-debug.js"></script>
+    <script src="lib/cuon-utils.js"></script>
+    <script src="lib/cuon-matrix.js"></script>
+    <script src="BlockyAnimal.js"></script>
+    <script src="Point.js"></script>
+    <script src="Triangle.js"></script>
+    <script src="Circle.js"></script>
+    <script src="Cube.js"></script>
+  
+  
+    <p id="numdot"> XXX </p>
+
+<p>
+  Animate dog:
+  <input class="styled" id="animate_on" type="button" value="ON" />
+  <input class="styled" id="animate_off" type="button" value="OFF" />
+  (Shift-click to toggle rolling ainimation)
+</p>
+
+<p>
+  Camera Angle <input type="range" id="angleSlide" min="0" max="360" value="5" step="1" class="slider" />
+  <span id="cam_angle"> XXX </span>
+</p>
+
+<p>
+  Jaw rotation
+  <input type="range" id="joint_rot" name="joint rotation" min="-25" max="8" value="0" step="1" />
+  <span id="joint_angle"> XXX </span>
+</p>
+
+<p>
+  Tail rotation
+  <input type="range" id="tail_rot" name="joint rotation" min="-20" max="20" value="0" step="1" />
+  <span id="tail_angle"> XXX </span>
+</p>
+<!--
+<p>
+  leg scaling:
+  <p>x
+    <input type="range" id="leg_x" min="0" max="1" value="0" step="0.001" />
+    y
+    <input type="range" id="leg_y" min="0" max="1" value="0" step="0.001" />
+    z
+    <input type="range" id="leg_z" min="0" max="1" value="0" step="0.001" />
+  </p>
+  <p>
+    <span id="legx"> XXX</span>
+    <span id="legy"> XXX</span>
+    <span id="legz"> XXX</span>
+  </p>
+  -->
+</p>
