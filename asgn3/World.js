@@ -1,4 +1,7 @@
-// ClickedPints.js (c) 2012 matsuda
+//assigment 3, blocky world
+
+//I apologize for the lack of comments, it became a little too much do document this mess when I finished this, I will add more comments in the next assigment as I do it.
+
 // Vertex shader program
 var VSHADER_SOURCE = `
   //precision mediump float;
@@ -73,7 +76,7 @@ let camera = null;
 
 
 
-var g_map = [
+var g_map_1 = [
   [1, 1, 1, 1, 1, 1, 1, 1],
   [1, 0, 0, 1, 0, 1, 1, 1],
   [1, 0, 1, 0, 0, 1, 1, 1],
@@ -82,7 +85,7 @@ var g_map = [
   [1, 1, 1, 0, 1, 1, 1, 1],
   [1, 0, 0, 0, 0, 1, 1, 1],
   [1, 0, 0, 0, 0, 1, 1, 1]
-]
+];
 
 var g_map_2 = [
   [1, 1, 1, 2, 1, 4, 1, 1],
@@ -93,6 +96,17 @@ var g_map_2 = [
   [1, 2, 3, 0, 1, 4, 1, 7],
   [1, 2, 6, 1, 0, 3, 1, 6],
   [1, 3, 0, 1, 0, 1, 3, 5]
+];
+
+var g_map_3 = [
+  [2, 2, 2, 2, 2, 4, 2, 2],
+  [2, 0, 1, 1, 1, 1, 1, 2],
+  [2, 2, 1, 6, 3, 1, 1, 2],
+  [2, 0, 3, 3, 2, 5, 1, 7],
+  [2, 2, 1, 1, 1, 1, 1, 3],
+  [2, 1, 3, 1, 1, 3, 1, 4],
+  [2, 1, 1, 1, 0, 3, 1, 2],
+  [2, 3, 2, 2, 2, 4, 3, 5]
 ]
 
 var g_currentMap = g_map_2;
@@ -513,37 +527,26 @@ function sendTextToHTML(text, htmlID){
   htmlElm.innerHTML = text;
 }
 
-let g_angle = 0;
-let g_globalAngle = 30;
-//let g_jaw_angle = 0;
-let g_joint_animate = false;
-let g_special_animate = false;
-let g_global_x_translate = 0;
-let g_global_y_translate = 0;
-let g_global_z_translate = 0;
+
+let g_globalAngle = 0;
 
 
 function addActionsFromHtmlUI() {
 
   //-------buttons-------
-  //clear
-  //animation buttons
-  //document.getElementById('animate_on').onclick = function() {g_joint_animate = true; };
-  document.getElementById('animate_off').onclick = function() {g_joint_animate = false; };
+  //change rendered world buttons
+  document.getElementById('load_map_1').onclick = function() {g_currentMap = g_map_1; renderScene();};
+  document.getElementById('load_map_2').onclick = function() {g_currentMap = g_map_2; renderScene();};
+  document.getElementById('load_map_3').onclick = function() {g_currentMap = g_map_3; renderScene();};
 
   //-------sliders-------
   //angle slider
   document.getElementById('angleSlide').addEventListener('mousemove', function() { g_globalAngle = this.value; renderScene(); sendTextToHTML(g_globalAngle + " degrees", "cam_angle");});
 
-  //joint angle sliders
-  //document.getElementById('joint_rot').addEventListener('mousemove', function() { g_jaw_angle = this.value; renderScene(); sendTextToHTML(g_jaw_angle + "degrees", "joint_angle");});
-  //document.getElementById('tail_rot').addEventListener('mousemove', function() { g_tail_angle = this.value; renderScene(); sendTextToHTML(g_tail_angle + "degrees", "tail_angle");});
-  
 }
 
 function main() {
   
-
   setupWebGL();
   connectVariablesToGLSL();
 
@@ -561,13 +564,12 @@ function main() {
   gl.clearColor(0.0, 0.0, 0.0, 1.0);
 
   // Clear <canvas>
-  
   camera = new Camera(g_fov, canvas.width/canvas.height, 0.1, 100);
-  //camera.updateCameraVecs();
+  camera.updateCameraVecs();
   document.onkeydown = camMove;
-  //document.onmousemove = camTurn;
+  document.onmousemove = camTurn;
   //requestAnimationFrame(tick);
-  //renderScene();
+  renderScene();
   //drawMap_h();
   
 }
@@ -578,7 +580,9 @@ function camMove(ev){
 }
 
 function camTurn(ev) {
-  let [x,y] = convertCoordinatesEventToGL(ev);
+  //let [x,y] = convertCoordinatesEventToGL(ev);
+  let x = ev.clientX;
+  let y = ev.clientY;
   camera.handleMouseTurn(x,y);
   renderScene();
 }
