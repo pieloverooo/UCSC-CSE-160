@@ -21,9 +21,15 @@ var FSHADER_SOURCE = `
   precision mediump float;
   varying vec2 v_UV;
   uniform vec4 u_FragColor;
-  uniform sampler2D u_Sampler0;
+  uniform sampler2D sky;
+  uniform sampler2D grass;
+  uniform sampler2D wood;
   uniform int u_whichTexture;
+
   void main() {
+    vec4 texture_sky = texture2D(sky, v_UV);
+    vec4 texture_grass = texture2D(grass, v_UV); 
+    vec4 texture_wood = texture2D(wood, v_UV);
    // gl_FragColor = u_FragColor;
    // gl_FragColor = vec4(v_UV, 1.0, 1.0);
 
@@ -32,7 +38,13 @@ var FSHADER_SOURCE = `
     } else if (u_whichTexture == 1) {
       gl_FragColor = vec4(v_UV, 1.0, 1.0); 
     } else if (u_whichTexture == 0) {
-      gl_FragColor = texture2D(u_Sampler0, v_UV); 
+      //gl_FragColor = texture2D(sky, v_UV); 
+      gl_FragColor = texture_sky;
+    } else if (u_whichTexture == 3) {
+      //gl_FragColor = texture2D(grass, v_UV);
+      gl_FragColor = texture_grass;
+    } else if (u_whichTexture == 4) {
+      gl_FragColor = texture_wood;
     } else {
      gl_FragColor = vec4(1, .2, .2, 1);
     }
@@ -86,8 +98,11 @@ var g_map_2 = [
 var g_currentMap = g_map_2;
 
 
+/*
+old 2d drawmap
 function drawMap() {
   var box = new Cube();
+  //box.matrix.SetScale(2,2,2);
   //for(i = 0; i < 2; ++i) {
     for (x = 0; x < 8; ++x){
       for(y = 0; y < 8; ++y){
@@ -104,6 +119,7 @@ function drawMap() {
     }
  // }
 }
+ */
 
 g_map_full = [
   [8,8,8,8,8,8,8,8],
@@ -114,11 +130,13 @@ g_map_full = [
   [8,8,8,8,8,8,8,8],
   [8,8,8,8,8,8,8,8],
   [8,8,8,8,8,8,8,8],
-]
+];
+
+//var g_currentMap = g_map_full;
 
 function drawMap_h() {
   var box = new Cube();
-  box.textureNum = 1;      
+  box.textureNum = 4;      
   box.color = [0.6,1,0.6, 1];
   
   for (x = 0; x < 8; ++x){
@@ -132,9 +150,12 @@ function drawMap_h() {
         
           box.matrix.setTranslate(0,0,0);
         
+          box.matrix.scale(2,2,2);
           box.matrix.translate(x, z, y);
-        
-          box.render();
+          //box.fastRender();
+          box.quickRender();
+          //box.render();
+          //box.renderFast();
         }
       }
     }
@@ -178,9 +199,24 @@ function connectVariablesToGLSL(){
     return;
   }
 
-  u_Sampler = gl.getUniformLocation(gl.program, "u_Sampler0");
-  if(!u_Sampler) {
-    console.log("Failed to get storage loc of u_sampler");
+  sky = gl.getUniformLocation(gl.program, "sky");
+  if(!sky) {
+    console.log("Failed to get storage loc of sky texture");
+    return false;
+  }
+
+  grass = gl.getUniformLocation(gl.program, "grass");
+  //if(grass) {
+  //  console.log("got grass");
+  //}
+  if(!grass) {
+    console.log("Failed to get storage loc of grass texture");
+    return false;
+  }
+
+  wood = gl.getUniformLocation(gl.program, "wood");
+  if(!wood) {
+    console.log("Failed to get storage loc of wood texture");
     return false;
   }
 
@@ -231,27 +267,110 @@ function connectVariablesToGLSL(){
 }
 
 
-g_global_dog_color = [154/255, 97/255, 26/255, 1];
-g_inner_ear_color = [50/255,39/255,7/255,1];
-//global body parts for rendering
-
-g_jaw_angle = 0;
-g_tail_angle = 0;
-g_torso_angle = 0;
-g_special_anim_offset = 0; //0.7
 
 function initTextures(/*gl, n*/){
+  
+  var sky_texture = gl.createTexture();
+  if(!sky_texture){
+    console.log("failed to create texure object for sky");
+    return false;
+  }
+  
 
-  var image = new Image();
-  if (!image) {
-    console.log("failed to create image object");
+  var sky_img = new Image();
+    if (!sky_img) {
+      console.log("failed to create image object");
+      return false;
+    }
+  
+  sky_img.src = "sky.jpg";
+
+  sky_img.onload = function() { 
+      
+    gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, 1);
+    gl.activeTexture(gl.TEXTURE0);
+    gl.bindTexture(gl.TEXTURE_2D, sky_texture);
+
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+
+    
+    gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGB, gl.RGB, gl.UNSIGNED_BYTE, sky_img);
+
+    gl.uniform1i(sky, 0);
+
+  }
+
+
+  var grass_texture = gl.createTexture();
+  if(!grass_texture){
+    console.log("failed to create texure object for sky");
+    return false;
+  }
+ 
+  //gl.bindTexture(gl.TEXTURE_2D, grass_texture);
+
+  var grass_img = new Image();
+  if (!grass_img) {
+    console.log("failed to create image object for grass");
     return false;
   }
 
-  image.onload = function() { sendTextureToGLSL(image);}
+  grass_img.src = "grass.jpg";  
+  
+  
+  grass_img.onload = function() { 
+    gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, 1);
+    gl.activeTexture(gl.TEXTURE1);
+    gl.bindTexture(gl.TEXTURE_2D, grass_texture);
 
-  image.src = 'sky.jpg';
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
 
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+
+    gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGB, gl.RGB, gl.UNSIGNED_BYTE, grass_img);
+
+    gl.uniform1i(grass, 1);
+
+
+  }
+  
+  var wood_texture = gl.createTexture();
+  if(!wood_texture){
+    console.log("failed to create texure object for sky");
+    return false;
+  }
+  
+  var wood_img = new Image();
+  if (!wood_img) {
+    console.log("failed to create image object for wood");
+    return false;
+  }
+
+  wood_img.src = "wood.jpg";  
+  
+  
+  wood_img.onload = function() { 
+    gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, 1);
+    gl.activeTexture(gl.TEXTURE2);
+    gl.bindTexture(gl.TEXTURE_2D, wood_texture);
+
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+
+    gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGB, gl.RGB, gl.UNSIGNED_BYTE, wood_img);
+
+    gl.uniform1i(wood, 2);
+
+
+  }
+  
+
+
+
+  console.log("finished loading textures");
   return true;
 }
 
@@ -268,11 +387,12 @@ function sendTextureToGLSL(image) {
 
   gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
 
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+
   gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGB, gl.RGB, gl.UNSIGNED_BYTE, image);
 
-  gl.uniform1i(u_Sampler, 0);
-
-  console.log("finished loading texture");
+  
 }
 
 //globals for testing
@@ -323,17 +443,17 @@ function renderScene(){
   skybox = new Cube();
 
   skybox.matrix.scale(70,70,70);
-
-  //skybox.render();
+  skybox.textureNum = 0;
+  skybox.render();
 
   plane = new Cube();
-
-  plane.matrix.translate(0,-0.5,0);
-  plane.matrix.scale(12.5,0.2,12.5);
-  plane.textureNum = 1;
+  
+  plane.matrix.setTranslate(10,-1,5);
+  plane.matrix.scale(60,0.1,60);
+  plane.textureNum = 3;
   plane.render();
 
-  
+  /*
   origin = new Cube();
   origin.color = [0.5,0.5,0.5,1];
   origin.textureNum = 2;
@@ -342,7 +462,7 @@ function renderScene(){
   //origin.matrix.translate(0,0.5,0);
   //origin.renderFast();
   origin.render();
-  
+  */
   //drawMap();
   drawMap_h();
   

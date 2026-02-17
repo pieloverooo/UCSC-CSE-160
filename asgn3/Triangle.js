@@ -135,6 +135,8 @@ class Defined_tri {
 
 var g_vertexBuffer = null;
 
+
+
 function initTriangle3D() {
 
     g_vertexBuffer = gl.createBuffer();
@@ -237,6 +239,11 @@ function drawTriangle3DUV(vertices, uv) {
     gl.drawArrays(gl.TRIANGLES, 0, n);
     
 }
+
+
+
+
+
 
 function drawMesh(vertices, uv){
 

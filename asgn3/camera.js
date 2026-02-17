@@ -6,7 +6,7 @@ class Camera {
     
     
     constructor (fov, aspect, near, far) {
-        this.eye = new Vector3([0,0.5,3]);
+        this.eye = new Vector3([5,6,3]);
         this.at = new Vector3([0,0,-1]);
         this.up = new Vector3([0,1,0]);
         this.tempAt = new Vector3([0,0,0]);
@@ -381,14 +381,15 @@ class Camera {
 
 
     panLeft() {
-        this.yaw -= 1.5;
+        //this.yaw -= 1.5;
+        this.yaw-=5;
 
         this.updateCameraVecs();
     }
 
     panRight() {
-        this.yaw += 1.5;
-
+        //this.yaw += 1.5;
+        this.yaw+=5;
         this.updateCameraVecs();
     }
 
