@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Lighting</title>
+  </head>
+
+  <body onload="main()">
+    <canvas id="webgl" width="400" height="400">
+    Please use a browser that supports "canvas"
+    </canvas>
+
+    <script src="lib/webgl-utils.js"></script>
+    <script src="lib/webgl-debug.js"></script>
+    <script src="lib/cuon-utils.js"></script>
+    <script src="lib/cuon-matrix.js"></script>
+    <script src="Lighting.js"></script>
+    <script src="Triangle.js"></script>
+    <script src="Cube.js"></script>
+    <script src="camera.js"></script>
+    <script src="Sphere.js"></script>
+    <script src="OBJLoader.js"></script>
+    <script src="Model.js"></script>
+  
+  
+    <p id="numdot"> XXX </p>
+
+<p>
+  Load map:
+  <input class="styled" id="load_map_1" type="button" value="Map 1" />
+  <input class="styled" id="load_map_2" type="button" value="Map 2" />
+  <input class="styled" id="load_map_3" type="button" value="Map 3" />
+  
+</p>
+
+<p>
+  Camera tilt <input type="range" id="angleSlide" min="0" max="360" value="5" step="1" class="slider" />
+  <span id="cam_angle"> XXX </span>
+</p>
+<p> Light x <input type="range" id="light_x" min="-5" max="10" value="0" step="0.1" class="slider" /> <span id="lightx"> X </span>
+    Light y <input type="range" id="light_y" min="-5" max="10" value="0" step="0.1" class="slider" /> <span id="lighty"> X </span>
+    Light z <input type="range" id="light_z" min="-5" max="10" value="0" step="0.1" class="slider" /> <span id="lightz"> X </span>
+</p>
+<p>Mouse to move camera, keyboard controls are:
+  <p>WASD to move, Q E to pan left/right, R F to tilt up and down</p>
+</p>
+</p>
