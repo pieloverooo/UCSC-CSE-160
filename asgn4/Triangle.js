@@ -440,4 +440,6 @@ function drawMeshWithNormal(vertices, uv, normal){
 
     gl.drawArrays(gl.TRIANGLES, 0, n);
 
+    gl.disableVertexAttribArray(a_Position);
+
 }

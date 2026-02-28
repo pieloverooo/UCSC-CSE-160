@@ -47,6 +47,7 @@ var FSHADER_SOURCE = `
     vec4 texture_grass = texture2D(grass, v_UV); 
     vec4 texture_wood = texture2D(wood, v_UV);
    
+    
 
     if (u_whichTexture == 2) {
       gl_FragColor = u_FragColor;               //use passed color
@@ -128,6 +129,7 @@ let g_fov = 90.0;
 let g_moveSpeed = 2.0;
 let camera = null;
 let u_cameraPos;
+let camMouseMove = false;
 
 var lightPos = [2.1,5.2,1.5];
 
@@ -418,12 +420,20 @@ function renderScene(){
   
   //ball = new Sphere();
   //ball.render();
-  
+  //teapot = new Model(gl, "teapot.obj");
   //origin.quickRender();
+
   //origin.render();
+  //cube.render()
+  gl.disableVertexAttribArray(0);
+  gl.disableVertexAttribArray(1);
+  gl.disableVertexAttribArray(2); 
+  //teapot.render();
   teapot.matrix.setTranslate(0,0,0);
   teapot.matrix.translate(0,3,0);
-  teapot.render(gl, gl.program);
+  //teapot.render(gl, gl.program);
+  gl.uniform1i(u_whichTexture, 5);
+  sponza.render(gl, gl.program);
   //drawMap_h();
   //gl.clear(gl.ARRAY_BUFFER);
   
@@ -490,6 +500,7 @@ function addActionsFromHtmlUI() {
 }
 
 let teapot = null;
+let sponza = null;
 
 function main() {
   
@@ -502,19 +513,22 @@ function main() {
 
 
   initTextures();
-  canvas.onmousedown = shift_click;
+  //canvas.onmousedown = shift_click;
 
   // Specify the color for clearing <canvas>
   gl.clearColor(0.0, 0.0, 0.0, 1.0);
 
   // Clear <canvas>
-  camera = new Camera(g_fov, canvas.width/canvas.height, 0.1, 100);
+  camera = new Camera(g_fov, canvas.width/canvas.height, 0.1, 1000);
   camera.updateCameraVecs();
   document.onkeydown = camMove;
-  //document.onmousemove = camTurn;
+  document.onmousemove = camTurn;
   //document.onmousedown = camTurn;
+  canvas,onmousedown = toggleMouseCam;
   //requestAnimationFrame(tick);
   teapot = new Model(gl, "teapot.obj");
+  sponza = new Model(gl, "sponza.obj");
+  sponza.matrix.scale(0.05,0.05,0.05);
   renderScene();
 
   //requestAnimationFrame(tick);
@@ -530,26 +544,25 @@ function camTurn(ev) {
   //let [x,y] = convertCoordinatesEventToGL(ev);
   let x = ev.clientX;
   let y = ev.clientY;
-  camera.handleMouseTurn(x,y);
+
+  if (camMouseMove == true){
+        
+    camera.handleMouseTurn(x,y);
+  }
   renderScene();
 }
 
-function shift_click(ev) {
-  if (ev.shiftKey) {
-    g_special_animate = !g_special_animate;
-    console.log("shift click");
-    //console.log(g_special_animate);
-  }
-  //console.log("clicked");
+function toggleMouseCam(){
+  camMouseMove = !camMouseMove;
+  console.log("mouse cam toggled, value:", camMouseMove);
 }
-
 
 function convertCoordinatesEventToGL(ev){
   var x = ev.clientX; // x coordinate of a mouse pointer
   var y = ev.clientY; // y coordinate of a mouse pointer
   var rect = ev.target.getBoundingClientRect();
-
-
+  
+  
   console.log("coords", x, y);
   
   x = ((x - rect.left) - canvas.width/2)/(canvas.width/2);
@@ -559,3 +572,13 @@ function convertCoordinatesEventToGL(ev){
 }
 
 
+/*
+function shift_click(ev) {
+  if (ev.shiftKey) {
+    g_special_animate = !g_special_animate;
+    console.log("shift click");
+    //console.log(g_special_animate);
+  }
+  //console.log("clicked");
+}
+*/
