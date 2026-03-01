@@ -516,6 +516,12 @@ function renderScene(){
     gl.disableVertexAttribArray(0);
     gl.disableVertexAttribArray(1);
     gl.disableVertexAttribArray(2);
+
+    sphere.render(gl, gl.program);
+    gl.disableVertexAttribArray(0);
+    gl.disableVertexAttribArray(1);
+    gl.disableVertexAttribArray(2);
+
   //gl.clear(gl.ARRAY_BUFFER);
   
   var duration = performance.now() - startTime;
@@ -524,15 +530,6 @@ function renderScene(){
 
 
 }
-
-function loadMap(){
-  if (g_currentMap == sponza) {
-
-  } else {
-    drawMap_h();
-  }
-}
-
 
 var g_startTime = performance.now()/1000.0;
 var g_seconds = performance.now()/1000.0-g_startTime;
@@ -593,6 +590,7 @@ function addActionsFromHtmlUI() {
 let teapot = null;
 let sponza = null;
 let lightCube = null;
+let sphere = null;
 function main() {
   
   setupWebGL();
@@ -632,6 +630,13 @@ function main() {
   
   sponza = new Model(gl, "sponza.obj");
   sponza.matrix.scale(0.05,0.05,0.05);
+  
+  //it was far easier to load a sphere object rather than trying to construct a sphere out of a large number of cubes, which
+  //really slowed down my renderer, loading a single obj is much faster.
+  sphere = new Model(gl, "sphere.obj");
+  sphere.matrix.setTranslate(5,4,1);
+  sphere.matrix.scale(1.4,1.4,1.4);
+  
   renderScene();
 
   //requestAnimationFrame(tick);
