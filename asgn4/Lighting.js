@@ -93,17 +93,21 @@ var FSHADER_SOURCE = `
   //eye
   vec3 E = normalize(u_cameraPos - vec3(v_vertPos));
 
+  //halfway (from the blinn phong model, code for computing it found at learnopengl.com)
+  vec3 halfway = normalize(L + E);
   //specular
-  float specular = pow(max(dot(E,R), 0.0), 10.0);
+  //float specular = pow(max(dot(E,R), 0.0), 2.0);
+  float spec = pow(max(dot(N, halfway), 0.0), 32.0);
 
 
   //diffuse and ambient
   vec3 diffuse = vec3(gl_FragColor) * nDotl;
   vec3 ambient = vec3(gl_FragColor) * 0.3;
   
+  vec3 specular = vec3(2.0) * spec;
   //final color
   gl_FragColor = vec4(specular + diffuse + ambient, 1.0);
-
+  //gl_FragColor = vec4(diffuse + ambient, 1.0);
   }`
 
 
@@ -133,6 +137,69 @@ let camMouseMove = false;
 
 var lightPos = [2.1,5.2,1.5];
 
+
+var g_map_1 = [
+  [1, 1, 1, 1, 1, 1, 1, 1],
+  [1, 0, 0, 1, 0, 1, 1, 1],
+  [1, 0, 1, 0, 0, 1, 1, 1],
+  [1, 0, 0, 0, 0, 1, 1, 1],
+  [1, 1, 1, 0, 0, 1, 1, 1],
+  [1, 1, 1, 0, 1, 1, 1, 1],
+  [1, 0, 0, 0, 0, 1, 1, 1],
+  [1, 0, 0, 0, 0, 1, 1, 1]
+];
+
+var g_map_2 = [
+  [1, 1, 1, 2, 1, 4, 1, 1],
+  [1, 0, 0, 1, 0, 1, 1, 1],
+  [1, 2, 1, 2, 2, 1, 1, 1],
+  [1, 0, 3, 3, 0, 5, 1, 7],
+  [1, 2, 1, 0, 0, 1, 1, 6],
+  [1, 2, 3, 0, 1, 4, 1, 7],
+  [1, 2, 6, 1, 0, 3, 1, 6],
+  [1, 3, 0, 1, 0, 1, 3, 5]
+];
+
+var g_map_3 = [
+  [2, 2, 2, 2, 2, 4, 2, 2],
+  [2, 0, 1, 1, 1, 1, 1, 2],
+  [2, 2, 1, 6, 3, 1, 1, 2],
+  [2, 0, 3, 3, 2, 5, 1, 7],
+  [2, 2, 1, 1, 1, 1, 1, 3],
+  [2, 1, 3, 1, 1, 3, 1, 4],
+  [2, 1, 1, 1, 0, 3, 1, 2],
+  [2, 3, 2, 2, 2, 4, 3, 5]
+]
+
+var g_currentMap = g_map_2;
+
+function drawMap_h() {
+  var box = new Cube();
+  box.textureNum = 4;      
+  box.color = [0.6,1,0.6, 1];
+  
+  for (x = 0; x < 8; ++x){
+    for(y = 0; y < 8; ++y){
+      if(g_currentMap[x][y] > 0){
+        
+        for(z = 0; z < g_currentMap[x][y]; ++z){
+          //var box = new Cube();
+          //box.textureNum = 1;      
+          //box.color = [0.6,1,0.6, 1];
+        
+          box.matrix.setTranslate(0,0,0);
+        
+          box.matrix.scale(2,2,2);
+          box.matrix.translate(x, z, y);
+          //box.fastRender();
+          box.quickRender();
+          //box.render();
+          //box.renderFast();
+        }
+      }
+    }
+  }
+}
 
 function setupWebGL(){
   // Retrieve <canvas> element
@@ -412,17 +479,18 @@ function renderScene(){
   gl.uniformMatrix4fv(u_GlobalRotateMatrix, false, globalRotMatrix.elements);
   
   
-  origin = new Cube();
-  origin.color = [0.5,0.5,0.5,1];
-  origin.textureNum = 5;
-  origin.matrix.scale(-5,-5,-5);
-  origin.normalMatrix.setInverseOf(origin.matrix).transpose();
+  //origin = new Cube();
+  //origin.color = [0.5,0.5,0.5,1];
+  //origin.textureNum = 5;
+  //origin.matrix.scale(-5,-5,-5);
+  //origin.normalMatrix.setInverseOf(origin.matrix).transpose();
   
   //ball = new Sphere();
   //ball.render();
   //teapot = new Model(gl, "teapot.obj");
   //origin.quickRender();
-
+  lightCube.matrix.setTranslate(lightPos[0], lightPos[1], lightPos[2]);
+  lightCube.render();
   //origin.render();
   //cube.render()
   gl.disableVertexAttribArray(0);
@@ -431,10 +499,23 @@ function renderScene(){
   //teapot.render();
   teapot.matrix.setTranslate(0,0,0);
   teapot.matrix.translate(0,3,0);
-  //teapot.render(gl, gl.program);
-  gl.uniform1i(u_whichTexture, 5);
-  sponza.render(gl, gl.program);
-  //drawMap_h();
+  //gl.uniform1i(u_whichTexture, 5);
+
+  if (g_currentMap == sponza) {
+    sponza.render(gl, gl.program);
+    gl.disableVertexAttribArray(0);
+    gl.disableVertexAttribArray(1);
+    gl.disableVertexAttribArray(2);
+  } else {
+    drawMap_h();
+    gl.disableVertexAttribArray(0);
+    gl.disableVertexAttribArray(1);
+    gl.disableVertexAttribArray(2);
+  }
+    teapot.render(gl, gl.program);
+    gl.disableVertexAttribArray(0);
+    gl.disableVertexAttribArray(1);
+    gl.disableVertexAttribArray(2);
   //gl.clear(gl.ARRAY_BUFFER);
   
   var duration = performance.now() - startTime;
@@ -443,6 +524,15 @@ function renderScene(){
 
 
 }
+
+function loadMap(){
+  if (g_currentMap == sponza) {
+
+  } else {
+    drawMap_h();
+  }
+}
+
 
 var g_startTime = performance.now()/1000.0;
 var g_seconds = performance.now()/1000.0-g_startTime;
@@ -489,6 +579,7 @@ function addActionsFromHtmlUI() {
   document.getElementById('load_map_1').onclick = function() {g_currentMap = g_map_1; renderScene();};
   document.getElementById('load_map_2').onclick = function() {g_currentMap = g_map_2; renderScene();};
   document.getElementById('load_map_3').onclick = function() {g_currentMap = g_map_3; renderScene();};
+  document.getElementById('load_sponza').onclick = function() {g_currentMap = sponza; renderScene();};
 
   //-------sliders-------
   //angle slider
@@ -501,7 +592,7 @@ function addActionsFromHtmlUI() {
 
 let teapot = null;
 let sponza = null;
-
+let lightCube = null;
 function main() {
   
   setupWebGL();
@@ -524,9 +615,21 @@ function main() {
   document.onkeydown = camMove;
   document.onmousemove = camTurn;
   //document.onmousedown = camTurn;
-  canvas,onmousedown = toggleMouseCam;
+  canvas.onmousedown = toggleMouseCam;
   //requestAnimationFrame(tick);
   teapot = new Model(gl, "teapot.obj");
+  teapot.matrix.scale(-1,-1,-1);
+  teapot.textureNum = 2;
+  teapot.color = [0.2,0.5,0.9,1.0];
+
+
+  lightCube = new Cube();
+  lightCube.color = [1,1,0,1];
+  lightCube.matrix.scale(-0.1,-0.1,-0.1);
+  lightCube.textureNum = 2;
+  
+  
+  
   sponza = new Model(gl, "sponza.obj");
   sponza.matrix.scale(0.05,0.05,0.05);
   renderScene();

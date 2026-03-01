@@ -10,7 +10,7 @@ class Camera {
         this.worldUp = new Vector3([0,1,0]);
         this.right = new Vector3([0,0,0]);
         this.moveSpeed = 0.8;//g_moveSpeed;
-        this.cameraSens = 0.0002//g_sensitivity;
+        this.cameraSens = 0.002//g_sensitivity;
         this.restrict_pitch = true;
         this.yaw = 200;//1;
         this.pitch = 0;
@@ -206,9 +206,7 @@ degreeToRad(deg){
 handleMouseTurn(x, y) {
     
     //let [x,y] = convertCoordinatesEventToGL(ev);
-    if (camMouseMove = false){
-        return;
-    }
+    
     
     
         var xpos = x;

@@ -10,7 +10,7 @@ class Cube {
         this.matrix = new Matrix4();
         this.normalMatrix = new Matrix4();
         this.textureNum = 0;
-        
+        this.normalbuffer = null;
         
         this.verts = [ -0.5, -0.5, -0.5,
                         0.5, -0.5, -0.5,
@@ -238,10 +238,36 @@ class Cube {
    
         gl.bufferData(gl.ARRAY_BUFFER, this.uv32, gl.DYNAMIC_DRAW);
 
+        
+        if (this.normalbuffer == null) {
+            this.normalBuffer = gl.createBuffer();
+
+            
+            if(!this.normalBuffer) {
+                console.log("failed to create normal buffer");
+                return -1;
+            }
+            
+            gl.bindBuffer(gl.ARRAY_BUFFER, this.normalBuffer);
+            
+        }
+
+
+        gl.bufferData(gl.ARRAY_BUFFER, this.normals32, gl.DYNAMIC_DRAW);
+
+        gl.vertexAttribPointer(a_Normal, 3, gl.FLOAT, false, 0,0);
+        
+        gl.enableVertexAttribArray(a_Normal);
+
+        this.normalMatrix = this.normalMatrix.setInverseOf(this.matrix);
+        this.normalMatrix.transpose();
+        this.normalMatrix.scale(-1,-1,-1);
+        gl.uniformMatrix4fv(u_NormalMatrix, false, this.normalMatrix.elements);
 
         gl.drawArrays(gl.TRIANGLES, 0, n);
         
     }
+    
     
 
 

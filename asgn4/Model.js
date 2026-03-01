@@ -6,10 +6,11 @@ class Model {
     this.filePath = filePath;
     this.color = [1.0, 1.0, 1.0, 1.0];
     this.matrix = new Matrix4();
-    
+    this.normalMatrix = new Matrix4();
     this.loader = new OBJLoader(this.filePath);
     this.verts32 = null; 
     this.normals32 = null;
+    this.textureNum = 5;
     this.loader.parseModel().then(() => {
       this.modelData = this.loader.getModelData();
 
@@ -32,6 +33,7 @@ class Model {
   render(gl, program) {
     if (!this.loader.isFullyLoaded) return;
 
+    gl.uniform1i(u_whichTexture, this.textureNum);
     //vertices
     gl.bindBuffer(gl.ARRAY_BUFFER, this.vertexBuffer);
     gl.bufferData(
@@ -58,9 +60,10 @@ class Model {
     gl.uniform4fv(u_FragColor, this.color);
 
     //normal matrix
-    let normalMatrix = new Matrix4().setInverseOf(this.matrix);
-    normalMatrix.transpose();
-    gl.uniformMatrix4fv(u_NormalMatrix, false, normalMatrix.elements);
+    this.normalMatrix = this.normalMatrix.setInverseOf(this.matrix);
+    this.normalMatrix.transpose();
+    this.normalMatrix.scale(-1,-1,-1);
+    gl.uniformMatrix4fv(u_NormalMatrix, false, this.normalMatrix.elements);
 
     //console.log(this.modelData.vertices.length / 3);
     gl.drawArrays(gl.TRIANGLES, 0, this.modelData.vertices.length / 3);
