@@ -1,0 +1,641 @@
+{
+  "accessors": [
+    {
+      "bufferView": 2,
+      "componentType": 5126,
+      "count": 189,
+      "max": [
+        1.0230778455734253,
+        1.2883907556533813,
+        -0.0
+      ],
+      "min": [
+        -1.0230770111083984,
+        -0.7116091847419739,
+        -4.962509632110596
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 2,
+      "byteOffset": 2268,
+      "componentType": 5126,
+      "count": 189,
+      "max": [
+        0.9810336828231812,
+        0.9808907508850098,
+        0.9817975759506226
+      ],
+      "min": [
+        -0.9810336828231812,
+        -0.9696139097213745,
+        -0.9981307983398438
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 1,
+      "componentType": 5126,
+      "count": 189,
+      "max": [
+        0.9948506355285645,
+        0.995896577835083
+      ],
+      "min": [
+        0.0008198189316317439,
+        0.0946621298789978
+      ],
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 0,
+      "componentType": 5125,
+      "count": 516,
+      "type": "SCALAR"
+    },
+    {
+      "bufferView": 2,
+      "byteOffset": 4536,
+      "componentType": 5126,
+      "count": 189,
+      "max": [
+        1.0328881740570068,
+        1.2981996536254883,
+        0.00981807243078947
+      ],
+      "min": [
+        -1.03288733959198,
+        -0.721305251121521,
+        -4.970902919769287
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 2,
+      "byteOffset": 6804,
+      "componentType": 5126,
+      "count": 189,
+      "max": [
+        0.9805522561073303,
+        0.9686811566352844,
+        0.9976309537887573
+      ],
+      "min": [
+        -0.9805522561073303,
+        -0.9805244207382202,
+        -0.9813600182533264
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 1,
+      "byteOffset": 1512,
+      "componentType": 5126,
+      "count": 189,
+      "max": [
+        0.9948506355285645,
+        0.995896577835083
+      ],
+      "min": [
+        0.0008198189316317439,
+        0.0946621298789978
+      ],
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 0,
+      "byteOffset": 2064,
+      "componentType": 5125,
+      "count": 516,
+      "type": "SCALAR"
+    },
+    {
+      "bufferView": 2,
+      "byteOffset": 9072,
+      "componentType": 5126,
+      "count": 88,
+      "max": [
+        1.2761808633804321,
+        0.514249861240387,
+        -0.10773367434740067
+      ],
+      "min": [
+        -1.2761808633804321,
+        0.3754020631313324,
+        -0.28584927320480347
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 2,
+      "byteOffset": 10128,
+      "componentType": 5126,
+      "count": 88,
+      "max": [
+        0.9699244499206543,
+        1.0,
+        0.9699244499206543
+      ],
+      "min": [
+        -0.9699244499206543,
+        -1.0,
+        -0.9699244499206543
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 1,
+      "byteOffset": 3024,
+      "componentType": 5126,
+      "count": 88,
+      "max": [
+        0.9859839677810669,
+        0.19344276189804077
+      ],
+      "min": [
+        0.7952660322189331,
+        0.015945017337799072
+      ],
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 0,
+      "byteOffset": 4128,
+      "componentType": 5125,
+      "count": 144,
+      "type": "SCALAR"
+    },
+    {
+      "bufferView": 2,
+      "byteOffset": 11184,
+      "componentType": 5126,
+      "count": 92,
+      "max": [
+        1.2831858396530151,
+        0.5200233459472656,
+        -0.10070718824863434
+      ],
+      "min": [
+        -1.2831858396530151,
+        0.36832094192504883,
+        -0.29285427927970886
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 2,
+      "byteOffset": 12288,
+      "componentType": 5126,
+      "count": 92,
+      "max": [
+        0.9699244499206543,
+        0.9999901056289673,
+        0.9714992642402649
+      ],
+      "min": [
+        -0.9699244499206543,
+        -1.0,
+        -0.9727287292480469
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 1,
+      "byteOffset": 3728,
+      "componentType": 5126,
+      "count": 92,
+      "max": [
+        0.9859839677810669,
+        0.19344276189804077
+      ],
+      "min": [
+        0.7952660322189331,
+        0.015945017337799072
+      ],
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 0,
+      "byteOffset": 4704,
+      "componentType": 5125,
+      "count": 144,
+      "type": "SCALAR"
+    },
+    {
+      "bufferView": 2,
+      "byteOffset": 13392,
+      "componentType": 5126,
+      "count": 280,
+      "max": [
+        1.0241022109985352,
+        -1.068641185760498,
+        2.1345717906951904
+      ],
+      "min": [
+        -1.0241022109985352,
+        -1.7840137481689453,
+        -1.5495970249176025
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 2,
+      "byteOffset": 16752,
+      "componentType": 5126,
+      "count": 280,
+      "max": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "min": [
+        -1.0,
+        -1.0,
+        -1.0
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 1,
+      "byteOffset": 4464,
+      "componentType": 5126,
+      "count": 280,
+      "max": [
+        0.9999999403953552,
+        0.9900000095367432
+      ],
+      "min": [
+        0.0,
+        0.2067049741744995
+      ],
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 0,
+      "byteOffset": 5280,
+      "componentType": 5125,
+      "count": 720,
+      "type": "SCALAR"
+    }
+  ],
+  "asset": {
+    "extras": {
+      "author": "MadeByYeshe (https://sketchfab.com/MadeByYeshe)",
+      "license": "CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)",
+      "source": "https://sketchfab.com/3d-models/retro-van-3d3755eaf50d412d86e8d12ec2600ca1",
+      "title": "Retro Van"
+    },
+    "generator": "Sketchfab-16.74.0",
+    "version": "2.0"
+  },
+  "bufferViews": [
+    {
+      "buffer": 0,
+      "byteLength": 8160,
+      "name": "floatBufferViews",
+      "target": 34963
+    },
+    {
+      "buffer": 0,
+      "byteLength": 6704,
+      "byteOffset": 8160,
+      "byteStride": 8,
+      "name": "floatBufferViews",
+      "target": 34962
+    },
+    {
+      "buffer": 0,
+      "byteLength": 20112,
+      "byteOffset": 14864,
+      "byteStride": 12,
+      "name": "floatBufferViews",
+      "target": 34962
+    }
+  ],
+  "buffers": [
+    {
+      "byteLength": 34976,
+      "uri": "scene.bin"
+    }
+  ],
+  "extensionsUsed": [
+    "KHR_materials_unlit"
+  ],
+  "images": [
+    {
+      "uri": "textures/1999_Toyota_Hiace_baseColor.png"
+    },
+    {
+      "uri": "textures/Outline_baseColor.png"
+    },
+    {
+      "uri": "textures/Hiace_wheels_baseColor.png"
+    }
+  ],
+  "materials": [
+    {
+      "doubleSided": true,
+      "extensions": {
+        "KHR_materials_unlit": {}
+      },
+      "name": "1999_Toyota_Hiace",
+      "pbrMetallicRoughness": {
+        "baseColorTexture": {
+          "index": 0
+        },
+        "metallicFactor": 0.0
+      }
+    },
+    {
+      "extensions": {
+        "KHR_materials_unlit": {}
+      },
+      "name": "Outline",
+      "pbrMetallicRoughness": {
+        "baseColorTexture": {
+          "index": 1
+        },
+        "metallicFactor": 0.0
+      }
+    },
+    {
+      "doubleSided": true,
+      "extensions": {
+        "KHR_materials_unlit": {}
+      },
+      "name": "Hiace_wheels",
+      "pbrMetallicRoughness": {
+        "baseColorTexture": {
+          "index": 2
+        },
+        "metallicFactor": 0.0
+      }
+    }
+  ],
+  "meshes": [
+    {
+      "name": "Object_0",
+      "primitives": [
+        {
+          "attributes": {
+            "NORMAL": 1,
+            "POSITION": 0,
+            "TEXCOORD_0": 2
+          },
+          "indices": 3,
+          "material": 0,
+          "mode": 4
+        }
+      ]
+    },
+    {
+      "name": "Object_1",
+      "primitives": [
+        {
+          "attributes": {
+            "NORMAL": 5,
+            "POSITION": 4,
+            "TEXCOORD_0": 6
+          },
+          "indices": 7,
+          "material": 1,
+          "mode": 4
+        }
+      ]
+    },
+    {
+      "name": "Object_2",
+      "primitives": [
+        {
+          "attributes": {
+            "NORMAL": 9,
+            "POSITION": 8,
+            "TEXCOORD_0": 10
+          },
+          "indices": 11,
+          "material": 0,
+          "mode": 4
+        }
+      ]
+    },
+    {
+      "name": "Object_3",
+      "primitives": [
+        {
+          "attributes": {
+            "NORMAL": 13,
+            "POSITION": 12,
+            "TEXCOORD_0": 14
+          },
+          "indices": 15,
+          "material": 1,
+          "mode": 4
+        }
+      ]
+    },
+    {
+      "name": "Object_4",
+      "primitives": [
+        {
+          "attributes": {
+            "NORMAL": 17,
+            "POSITION": 16,
+            "TEXCOORD_0": 18
+          },
+          "indices": 19,
+          "material": 2,
+          "mode": 4
+        }
+      ]
+    }
+  ],
+  "nodes": [
+    {
+      "children": [
+        1
+      ],
+      "matrix": [
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        2.220446049250313e-16,
+        -1.0,
+        0.0,
+        0.0,
+        1.0,
+        2.220446049250313e-16,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "name": "Sketchfab_model"
+    },
+    {
+      "children": [
+        2
+      ],
+      "name": "root"
+    },
+    {
+      "children": [
+        3
+      ],
+      "matrix": [
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        2.220446049250313e-16,
+        1.0,
+        0.0,
+        0.0,
+        -1.0,
+        2.220446049250313e-16,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "name": "GLTF_SceneRootNode"
+    },
+    {
+      "children": [
+        4,
+        7,
+        10
+      ],
+      "name": "1999 Toyota Hiace Holder_3"
+    },
+    {
+      "children": [
+        5,
+        6
+      ],
+      "matrix": [
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        2.5961101055145264,
+        1.0
+      ],
+      "name": "1999 Toyota Hiace Body_0"
+    },
+    {
+      "mesh": 0,
+      "name": "Object_5"
+    },
+    {
+      "mesh": 1,
+      "name": "Object_6"
+    },
+    {
+      "children": [
+        8,
+        9
+      ],
+      "matrix": [
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        2.5653157234191895,
+        1.0
+      ],
+      "name": "1999 Toyota Hiace Mirros_1"
+    },
+    {
+      "mesh": 2,
+      "name": "Object_8"
+    },
+    {
+      "mesh": 3,
+      "name": "Object_9"
+    },
+    {
+      "children": [
+        11
+      ],
+      "matrix": [
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.000507354736328125,
+        0.854458212852478,
+        -0.27942609786987305,
+        1.0
+      ],
+      "name": "1999 Toyota Hiace wheels_2"
+    },
+    {
+      "mesh": 4,
+      "name": "Object_11"
+    }
+  ],
+  "samplers": [
+    {
+      "magFilter": 9729,
+      "minFilter": 9987,
+      "wrapS": 10497,
+      "wrapT": 10497
+    }
+  ],
+  "scene": 0,
+  "scenes": [
+    {
+      "name": "Sketchfab_Scene",
+      "nodes": [
+        0
+      ]
+    }
+  ],
+  "textures": [
+    {
+      "sampler": 0,
+      "source": 0
+    },
+    {
+      "sampler": 0,
+      "source": 1
+    },
+    {
+      "sampler": 0,
+      "source": 2
+    }
+  ]
+}
