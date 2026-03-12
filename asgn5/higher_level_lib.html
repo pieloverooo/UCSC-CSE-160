@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Higher Level Graphics Library</title>
+  </head>
+
+  <body>
+    <!--<canvas id="c" width="400" height="400"> -->
+      <canvas id="c" width="800" height="450" data-engine="three.js r183">
+        Please use a browser that supports "canvas"
+      </canvas>
+
+      </body>
+      
+      <script type="importmap">
+        {
+          "imports": {
+            "three": "https://cdn.jsdelivr.net/npm/three@0.183.2/build/three.module.js",
+            "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.183.2/examples/jsm/"
+          }
+        }
+      </script>
+      <script type="module" src="main.js"></script>
+      <p>
+        Drag to look around, WASD to move camera
+      </p>
+      
+</html>
